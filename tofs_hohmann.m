@@ -35,7 +35,7 @@ deltat_hom = pi*sqrt(a_hom^3/ksun);         %Tof [s]
 deltat_hom_days = deltat_hom/(3600*24);     %Tof[days]
 
 %Time of flight of Homhann transfer from Earth to Mercury
-a_hom2 = (kep_earth(1)+kep_merc(1))/2;      %Semi-major axis [km]
+a_hom2 = (kep_pl2(1)+kep_pl3(1))/2;         %Semi-major axis [km]
 deltat_hom2 = pi*sqrt(a_hom2^3/ksun);       %Tof [s]
 deltat_hom_days2 = deltat_hom2/(3600*24);   %Tof [days]
 
