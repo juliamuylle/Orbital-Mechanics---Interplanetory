@@ -44,7 +44,7 @@ Tsyn_ne = T_nep*T_earth/abs(T_nep-T_earth);
 Tsyn_me = T_merc*T_earth/abs(T_merc-T_earth);
 Tsyn_nm = T_nep*T_merc/abs(T_nep-T_merc);
 
-j = Tsyn_ne/Tsyn_me;
+l = Tsyn_ne/Tsyn_me;
 
 % a = Tsyn_ne*11;
 % b = Tsyn_me*35;
@@ -101,19 +101,19 @@ vm_vect=zeros(3,length(arrival_vec_earth));
             rm_vect(1:3,k)=r_m;
             vm_vect(1:3,k)=v_m;
             
-            Vpl = v_m(k,:); %Velocity of planet 2 (Earth) in heliocentric frame
+            Vpl = vm_vect(:,k); %Velocity of planet 2 (Earth) in heliocentric frame
             
             %Dv for heliocentric leg from Neptune to Earth
             [delta_v1,VI,VF] = comp_dv(r1,v1,r_m,v_m,departure_vec,arrival_vec_earth,ksun);            
-            V_M = VF;
+            V_M = VF';
             
             %Dv for heliocentric leg from Earth to Mercury
             [delta_v3,VI,VF] = comp_dv(r_m,v_m,r2,v2,departure_vec,arrival_vec_earth,ksun);
-            V_P = VI;
+            V_P = VI';
             
             %Entry and exit velocities in SOI of Earth
-            vinfM(:,i) = V_M'-Vpl;        
-            vinfP(:,i) = V_P'-Vpl; 
+            vinfM = V_M-Vpl';        
+            vinfP = V_P-Vpl'; 
         
             [deltav_perig,rp,delta,arcs] = flybyPow(vinfM,vinfP,mu_earth,Re); 
             %[delta_t,rp,deltav_perig,vp_i,vp_f,e_i,e_f]=flyby_pow(vinfM(:,i),vinfP(:,i),mu_earth,Re);
