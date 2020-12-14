@@ -119,12 +119,11 @@ vm_vect=zeros(3,length(arrival_vec_earth));
             %Entry and exit velocities in SOI of Earth
             vinfM = V_M-Vpl;        
             vinfP = V_P-Vpl; 
-        
-            [deltav_perig,rp,delta,arcs] = flybyPow(vinfM,vinfP,mu_earth,Re); 
-            %[delta_t,rp,deltav_perig,vp_i,vp_f,e_i,e_f]=flyby_pow(vinfM(:,i),vinfP(:,i),mu_earth,Re);
          end
    end
 end
+
+[deltav_perig,rp,delta,arcs] = flybyPow(vinfM,vinfP,mu_earth,Re); 
 
 %Total cost  ?????
 deltaV_tot = delta_v1+delta_v3;
@@ -230,6 +229,4 @@ ylabel('ry')
 legend('Orbit1','Tranfer arc','Orbit2','P1','P2')
 title('Orbits of the manoeuver')
 axis equal
-
-
 
