@@ -74,6 +74,9 @@ arrival_vec = [arrh_min:100:arr];
 
 %% 
 
+DV1=[];
+DV3=[];
+
 %Departure ephemeris
 r1_vect=zeros(3,length(departure_vec));
 v1_vect=zeros(3,length(departure_vec));
@@ -106,14 +109,16 @@ vm_vect=zeros(3,length(arrival_vec_earth));
             %Dv for heliocentric leg from Neptune to Earth
             [delta_v1,VI,VF] = comp_dv(r1,v1,r_m,v_m,departure_vec,arrival_vec_earth,ksun);            
             V_M = VF';
+            DV1=[DV1;delta_v1];
             
             %Dv for heliocentric leg from Earth to Mercury
             [delta_v3,VI,VF] = comp_dv(r_m,v_m,r2,v2,departure_vec,arrival_vec_earth,ksun);
             V_P = VI';
+            DV3=[DV3;delta_v3];
             
             %Entry and exit velocities in SOI of Earth
-            vinfM = V_M-Vpl';        
-            vinfP = V_P-Vpl'; 
+            vinfM = V_M-Vpl;        
+            vinfP = V_P-Vpl; 
         
             [deltav_perig,rp,delta,arcs] = flybyPow(vinfM,vinfP,mu_earth,Re); 
             %[delta_t,rp,deltav_perig,vp_i,vp_f,e_i,e_f]=flyby_pow(vinfM(:,i),vinfP(:,i),mu_earth,Re);
@@ -121,7 +126,7 @@ vm_vect=zeros(3,length(arrival_vec_earth));
    end
 end
 
-%Total cost
+%Total cost  ?????
 deltaV_tot = delta_v1+delta_v3;
 
 % %dv for nep_earth
@@ -225,3 +230,6 @@ ylabel('ry')
 legend('Orbit1','Tranfer arc','Orbit2','P1','P2')
 title('Orbits of the manoeuver')
 axis equal
+
+
+
