@@ -1,4 +1,4 @@
-function [deltav_perig,rp] = flybyPow(vinfM,vinfP,mu_E,hatm,rp0)
+function [deltav_perig,rp] = flybyPow(vinfM,vinfP,mu_E,hatm,Re)
 %[DV_ga,DV_fb,rp,steps,delta,arcs]
 
 delta_true = acos(dot(vinfM,vinfP)/(norm(vinfM)*norm(vinfP)));
@@ -16,9 +16,9 @@ delta = @(rp) deltaM(rp)/2+deltaP(rp)/2;
 FUN = @(rp) delta(rp)-delta_true;
 
 
-rp = fsolve(FUN,rp0);
+rp = fsolve(FUN,Re+hatm);
 
-if rp < 6371+hatm
+if rp < Re+hatm
      rp = NaN;
 end
 
