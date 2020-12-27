@@ -95,11 +95,11 @@ for i = 1 : length(departure_vec)
             Vpl = v_m;         %Velocity of planet 2 (Earth) in heliocentric frame
             
             %Dv for heliocentric leg from Neptune to Earth
-            [delta_v1(i,j,k),VI,VF] = comp_dv(r1,v1,r_m,v_m,departure_vec(i),arrival_vec_earth(k),ksun);            
+            [~,delta_v1(i,j,k),~,VI,VF] = comp_dv(r1,v1,r_m,v_m,departure_vec(i),arrival_vec_earth(k),ksun);            
             V_M = VF';            
             
             %Dv for heliocentric leg from Earth to Mercury
-            [delta_v3(i,j,k),VI,VF] = comp_dv(r_m,v_m,r2,v2,arrival_vec_earth(k),arrival_vec(j),ksun);
+            [~,~,delta_v3(i,j,k),VI,VF] = comp_dv(r_m,v_m,r2,v2,arrival_vec_earth(k),arrival_vec(j),ksun);
             V_P = VI';        
             
             %Entry and exit velocities in SOI of Earth
@@ -111,7 +111,7 @@ for i = 1 : length(departure_vec)
 %                  deltav_PM(i,j,k) = V_P - V_M;
           
             else
-                rp(i,j,k) = 0;
+                rp(i,j,k) = NaN;
                 deltav_perig(i,j,k) = NaN;
 %                 deltav_PM(i,j,k) = NaN;
             end   
@@ -129,6 +129,8 @@ deltaV_tot = delta_v1+delta_v3+deltav_perig;
 deltavmin = min(deltaV_tot);
 deltavmin = min(deltavmin);
 deltavmin = min(deltavmin);
+
+
 
 
 %%
@@ -212,6 +214,10 @@ deltaV_tot_plot = squeeze(deltaV_tot_plot);
 departure_nep = departure_vec(row);
 departure_earth = arrival_vec_earth(col);
 arrival_merc = arrival_vec(row2);
+
+time_dep = mjd20002date(departure_nep);
+time_earth = mjd20002date(departure_earth);
+time_arrival = mjd20002date(arrival_merc);
 
 
 %propagate the orbit for the mission with dv min
